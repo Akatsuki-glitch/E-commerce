@@ -112,7 +112,7 @@ function renderCart() {
         const li = document.createElement('li');
         li.className = 'list-group-item d-flex justify-content-between align-items-center';
         li.innerHTML = `
-        <div>
+        <div class="text-white">
             <strong>${item.name}</strong><br>
             $${item.price.toFixed(2)} x ${item.qty}
         </div>
