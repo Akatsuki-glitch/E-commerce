@@ -1,4 +1,5 @@
-const products = [
+// replace static products with localStorage-backed products
+const defaultProducts = [
     { id: 1, name: "MacBook Pro 16-inch", price: 2499.99, desc: "Apple's most powerful laptop with M3 Pro chip", image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=300&fit=crop" },
     { id: 2, name: "iPhone 15 Pro Max", price: 1199.99, desc: "Latest iPhone with titanium design and A17 Pro chip", image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400&h=300&fit=crop" },
     { id: 3, name: "Samsung Galaxy S24 Ultra", price: 1299.99, desc: "Premium Android smartphone with S Pen", image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop" },
@@ -26,6 +27,22 @@ const products = [
     { id: 25, name: "Instant Pot Duo", price: 99.99, desc: "7-in-1 electric pressure cooker", image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop" }
 ];
 
+function loadProducts() {
+    const stored = localStorage.getItem('products');
+    if (stored) {
+        try { return JSON.parse(stored); } catch (e) { console.warn('Failed to parse stored products, using defaults'); }
+    }
+    // initialize storage with defaults
+    localStorage.setItem('products', JSON.stringify(defaultProducts));
+    return defaultProducts.slice();
+}
+
+function saveProducts(list) {
+    localStorage.setItem('products', JSON.stringify(list));
+}
+
+let products = loadProducts();
+
 const productListEl = document.getElementById('product-list');
 const cartEl = document.getElementById('cart');
 const totalEl = document.getElementById('total');
@@ -34,6 +51,47 @@ const checkoutFormEl = document.getElementById('checkout-form');
 const cartBtn = document.getElementById('cart-btn');
 
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+// keep a single hide timeout and a longer delay
+let hideCartTimeout = null;
+const CART_HIDE_DELAY = 4000; // milliseconds
+
+function showFloatingCartToggle() {
+    const cartSection = document.getElementById('cart-section');
+    if (!cartSection) return;
+
+    // clear any previously scheduled hide so repeated adds extend visibility
+    if (hideCartTimeout) {
+        clearTimeout(hideCartTimeout);
+        hideCartTimeout = null;
+    }
+
+    // always show on the right
+    cartSection.classList.remove('cart-left','cart-right','cart-hidden');
+    cartSection.classList.add('cart-right');
+
+    // attach hover listeners once so hovering keeps it visible
+    if (!cartSection.dataset.floatingInit) {
+        cartSection.addEventListener('mouseenter', () => {
+            if (hideCartTimeout) {
+                clearTimeout(hideCartTimeout);
+                hideCartTimeout = null;
+            }
+            cartSection.classList.remove('cart-hidden');
+        });
+        cartSection.addEventListener('mouseleave', () => {
+            if (hideCartTimeout) clearTimeout(hideCartTimeout);
+            hideCartTimeout = setTimeout(() => cartSection.classList.add('cart-hidden'), CART_HIDE_DELAY);
+        });
+        cartSection.dataset.floatingInit = '1';
+    }
+
+    // schedule auto-hide
+    hideCartTimeout = setTimeout(() => {
+        cartSection.classList.add('cart-hidden');
+        hideCartTimeout = null;
+    }, CART_HIDE_DELAY);
+}
 
 function renderProducts() {
     productListEl.innerHTML = '';
@@ -78,6 +136,8 @@ function addToCart(id) {
     else cart.push({ id: prod.id, name: prod.name, price: prod.price, qty: 1 });
     saveCart();
     renderCart();
+    // show floating cart and toggle side
+    showFloatingCartToggle();
 }
 
 function removeFromCart(id) {
