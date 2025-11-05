@@ -41,11 +41,38 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
   const products = loadProducts();
   const id = idInput.value ? Number(idInput.value) : Date.now();
+
+  // If a file was selected, read it as data URL before saving
+  const file = imageInput.files && imageInput.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      const imgData = evt.target.result;
+      const item = {
+        id,
+        name: nameInput.value.trim(),
+        price: Number(priceInput.value),
+        image: imgData,
+        desc: descInput.value.trim()
+      };
+      const idx = products.findIndex(p => p.id === id);
+      if (idx >= 0) products[idx] = item; else products.push(item);
+      saveProducts(products);
+      renderAdmin();
+      resetForm();
+      alert('Saved');
+    };
+    reader.readAsDataURL(file);
+    return;
+  }
+
+  // No file selected — keep existing image or placeholder
+  const existing = products.find(p => p.id === id);
   const item = {
     id,
     name: nameInput.value.trim(),
     price: Number(priceInput.value),
-    image: imageInput.value.trim() || 'https://via.placeholder.com/400x300?text=No+Image',
+    image: imageInput.value.trim() || (existing ? existing.image : 'https://via.placeholder.com/400x300?text=No+Image'),
     desc: descInput.value.trim()
   };
   const idx = products.findIndex(p => p.id === id);
@@ -114,3 +141,13 @@ document.getElementById('restoreDefaults').addEventListener('click', () => {
 });
 
 renderAdmin();
+
+// show preview when selecting a file
+imageInput.addEventListener('change', () => {
+  const file = imageInput.files && imageInput.files[0];
+  const preview = document.getElementById('prod-image-preview');
+  if (!file) { preview.style.display = 'none'; preview.src = ''; return; }
+  const reader = new FileReader();
+  reader.onload = (e) => { preview.src = e.target.result; preview.style.display = 'block'; };
+  reader.readAsDataURL(file);
+});

@@ -46,6 +46,15 @@ function handleLogin() {
             btnLoader.style.display = 'none';
             submitBtn.disabled = false;
             
+            // Persist user to localStorage
+            const user = {
+                email,
+                name: email.split('@')[0],
+                loggedIn: true,
+                loginAt: new Date().toISOString()
+            };
+            saveUser(user);
+            
             // Show success modal
             const modalElement = document.getElementById('successModal');
             if (modalElement && typeof bootstrap !== 'undefined') {
@@ -94,6 +103,29 @@ function handlePasswordToggle() {
         }
     });
 }
+
+// --- simple client-side auth helpers (localStorage-backed) ---
+function saveUser(user) {
+    try { localStorage.setItem('user', JSON.stringify(user)); } catch (e) { console.warn('Failed to save user', e); }
+}
+
+function getCurrentUser() {
+    try { return JSON.parse(localStorage.getItem('user') || 'null'); } catch (e) { return null; }
+}
+
+function isAuthenticated() {
+    const u = getCurrentUser();
+    return !!(u && u.loggedIn);
+}
+
+function logout() {
+    try { localStorage.removeItem('user'); } catch (e) { /* ignore */ }
+    // Redirect to login page
+    window.location.href = 'login.html';
+}
+
+// Expose auth helpers for other pages to call
+window.auth = { saveUser, getCurrentUser, isAuthenticated, logout };
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
