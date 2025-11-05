@@ -257,3 +257,13 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCart();
     }
 });
+        // Logout handler: remove user object and redirect to login
+        const logoutBtn = document.getElementById('logout');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                try {
+                    localStorage.removeItem('user');
+                    window.location.href = 'index.html';
+                } catch (e) { window.location.href = 'index.html'; }    
+            });
+        }

@@ -64,13 +64,13 @@ function handleLogin() {
                 
                 // Auto redirect after modal is shown
                 setTimeout(() => {
-                    console.log('Redirecting to index.html');
-                    window.location.href = 'index.html';
+                    console.log('Redirecting to home.html');
+                    window.location.href = 'home.html';
                 }, 1500);
             } else {
                 console.log('Modal or Bootstrap not found, redirecting directly');
                 // Fallback: redirect directly if modal fails
-                window.location.href = 'index.html';
+                window.location.href = 'home.html';
             }
             
         }, 1000);
@@ -118,14 +118,18 @@ function isAuthenticated() {
     return !!(u && u.loggedIn);
 }
 
-function logout() {
-    try { localStorage.removeItem('user'); } catch (e) { /* ignore */ }
-    // Redirect to login page
-    window.location.href = 'login.html';
-}
-
+        // Logout handler: remove user object and redirect to login
+        const logoutBtn = document.getElementById('logout');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                try {
+                    localStorage.removeItem('user');
+                    window.location.href = 'index.html';
+                } catch (e) { window.location.href = 'index.html'; }    
+            });
+        }
 // Expose auth helpers for other pages to call
-window.auth = { saveUser, getCurrentUser, isAuthenticated, logout };
+window.auth = { saveUser, getCurrentUser, isAuthenticated, };
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
@@ -133,3 +137,4 @@ document.addEventListener('DOMContentLoaded', () => {
     handleLogin();
     handlePasswordToggle();
 });
+

@@ -1,74 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Simple E-commerce</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="style.css" rel="stylesheet">
-    </head>
-    <body class="bg-light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - My Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block; vertical-align: middle; margin-right: 10px;">
+                    <path d="M9 2L7.17 4H4C2.9 4 2 4.9 2 6V19C2 20.1 2.9 21 4 21H20C21.1 21 22 20.1 22 19V6C22 4.9 21.1 4 20 4H16.83L15 2H9Z" fill="url(#gradient1)"/>
+                    <circle cx="12" cy="13" r="3.5" fill="url(#gradient2)"/>
+                    <defs>
+                        <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                My Shop
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link text-white fw-bold" href="about.html">About Us</a>
+                <a class="nav-link text-white fw-bold" href="contact.html">Contact Us</a>
+            </div>
+        </div>
+    </nav>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="index.html">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block; vertical-align: middle; margin-right: 10px;">
-                        <path d="M9 2L7.17 4H4C2.9 4 2 4.9 2 6V19C2 20.1 2.9 21 4 21H20C21.1 21 22 20.1 22 19V6C22 4.9 21.1 4 20 4H16.83L15 2H9Z" fill="url(#gradient1)"/>
-                        <circle cx="12" cy="13" r="3.5" fill="url(#gradient2)"/>
-                        <defs>
-                            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
-                            </linearGradient>
-                            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                    My Shop
-                </a>
-                <div class="navbar-nav ms-auto d-flex flex-row align-items-center">
-                    <a class="nav-link active me-3 text-white fw-bold" href="index.html">Products</a>
-                    <a class="nav-link active me-3 text-white fw-bold" href="admin.html">Add</Address></a>
-                    <a class="nav-link me-3 text-white fw-bold" href="about.html">About Us</a>
-                    <a class="nav-link me-3 text-white fw-bold" href="contact.html">Contact Us</a>
-                    <a class="nav-link me-3 text-white fw-bold" href="login.html">Logout</a>
-                    <button class="btn btn-outline-primary position-relative" id="cart-btn">
-                        Cart <span id="cart-count" class="badge bg-danger ms-1">0</span>
-                    </button>
+    <!-- Login Form Container -->
+    <main class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="login-container">
+                    <div class="login-header">
+                        <h1 class="login-title">Hello! Welcome.</h1>
+                        <p class="login-subtitle">Sign in to your account to continue shopping</p>
+                    </div>
+                    
+                    <form id="loginForm" class="login-form">
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                            </div>
+                            <div class="error-message" id="emailError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                                        <circle cx="12" cy="16" r="1" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M7 11V7A5 5 0 0 1 17 7V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+                                <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 12S5 4 12 4S23 12 23 12S19 20 12 20S1 12 1 12Z" stroke="currentColor" stroke-width="2"/>
+                                        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="error-message" id="passwordError"></div>
+                        </div>
+
+                        <div class="form-options">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            </div>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-login">
+                            <span class="btn-text">Sign In</span>
+                            <span class="btn-loader" style="display: none;">
+                                <svg class="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="31.416" stroke-dashoffset="31.416">
+                                        <animate attributeName="stroke-dasharray" dur="2s" values="0 31.416;15.708 15.708;0 31.416" repeatCount="indefinite"/>
+                                        <animate attributeName="stroke-dashoffset" dur="2s" values="0;-15.708;-31.416" repeatCount="indefinite"/>
+                                    </circle>
+                                </svg>
+                            </span>
+                        </button>
+
+                        <div class="login-divider">
+                            <span>or</span>
+                        </div>
+
+                        <div class="social-login">
+                            <button type="button" class="btn btn-social btn-google">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M22.56 12.25C22.56 11.47 22.49 10.72 22.36 10H12V14.51H17.92C17.66 15.98 16.88 17.23 15.71 18.08V21.34H19.28C21.36 19.42 22.56 16.18 22.56 12.25Z" fill="#4285F4"/>
+                                    <path d="M12 23C15.24 23 17.95 21.92 19.28 19.34L15.71 18.08C14.83 18.8 13.66 19.25 12 19.25C8.87 19.25 6.22 17.14 5.27 14.29H1.64V17.55C2.98 20.24 5.76 23 12 23Z" fill="#34A853"/>
+                                    <path d="M5.27 14.29C4.48 12.19 4.48 9.81 5.27 7.71V4.45H1.64C-0.55 8.24 -0.55 13.76 1.64 17.55L5.27 14.29Z" fill="#FBBC05"/>
+                                    <path d="M12 4.75C13.77 4.75 15.35 5.36 16.6 6.55L19.36 3.79C17.95 1.45 15.24 0 12 0C5.76 0 2.98 2.76 1.64 5.45L5.27 7.71C6.22 4.86 8.87 2.75 12 2.75Z" fill="#EA4335"/>
+                                </svg>
+                                Continue with Google
+                            </button>
+                        </div>
+
+                        <div class="signup-link">
+                            <p>Don't have an account? <a href="#" class="signup-link-text">Sign up here</a></p>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </nav>
+        </div>
+    </main>
 
-        <main class="container my-5">
-            <h1 class= "mb-4">Products</h1>
-            <div class="row" id="product-list" aria-live="polite"></div>
-
-            <hr class="my-5">
-            <section id="cart-section" class="mb-5">
-                <h2>Shopping Cart</h2>
-                <ul id="cart" class="list-group mb-3"></ul>
-                <p class="fw-bold">Total: $<span id="total">0.00</span></p>
-
-                <div id="checkout-form" class="card p-3" style="display:none;">
-                    <h5 class="mb-3">Checkout</h5>
-                    <div class="mb-2">
-                        <input id="customer-name" class="form-control" placeholder="Full name">
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="success-icon">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
-                    <div class="mb-2">
-                        <input id="customer-email" class="form-control" placeholder="Email">
-                    </div>
-                    <div class="mb-2">
-                        <input id="customer-address" class="form-control" placeholder="address">
-                    </div>
-                    <button id="confirm-checkout" class="btn btn-success">Place Order</button>
+                    <h4 class="mt-3">Login Successful!</h4>
+                    <p class="text-muted">Welcome back to My Shop</p>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="window.location.href='home.html'">Continue Shopping</button>
                 </div>
-            </section>
-        </main>
+            </div>
+        </div>
+    </div>
 
-        <script src="script.js" defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="login.js"></script>
 </body>
 </html>

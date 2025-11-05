@@ -1,18 +1,3 @@
-// auth middleware: redirect to login if not authenticated
-(function requireAuth() {
-  try {
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
-    if (!user || !user.loggedIn) {
-      // remember where to go back after login
-      try { localStorage.setItem('returnTo', window.location.pathname + window.location.search); } catch (e) { /* ignore */ }
-      window.location.href = 'login.html';
-      return;
-    }
-  } catch (e) {
-    window.location.href = 'login.html';
-  }
-})();
-
 // Simple admin UI to manage products stored in localStorage
 function loadProducts() {
   const stored = localStorage.getItem('products');
